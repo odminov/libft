@@ -20,7 +20,7 @@ INC = libft.h
 all: $(NAME)
 
 $(NAME):
-	@gcc -Wextra -Wall -Werror -c $(SRC)-I $(INC)
+	@gcc -Wextra -Wall -Werror -c $(SRC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
