@@ -23,12 +23,19 @@ INC = libft.h
 
 all: $(NAME)
 
+<<<<<<< HEAD
 %.o:%.c
 	$(CC) $(FLAGS) -c $^
 
 $(NAME):$(OBJ)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
+=======
+$(NAME):
+	@gcc -Wextra -Wall -Werror -c $(SRC)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
+>>>>>>> 1d3a1acd986b8ef2d26a1927ba36d71279373b4d
 
 clean:
 	rm -rf $(OBJ)
