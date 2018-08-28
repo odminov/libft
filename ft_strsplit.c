@@ -11,102 +11,92 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 
-static unsigned int		cnt_wrd(char const *s, char c)
+static int	count_words(const char *str, char c)
 {
-	unsigned int	i;
-	unsigned int	words;
+	int		i;
+	int		words;
+	int		in_word;
 
 	i = 0;
 	words = 0;
-	while (s[i])
+	in_word = 0;
+	while (str[i])
 	{
-		if (s[i] != c)
+		while (str[i] && str[i] != c)
 		{
-			while (s[i] != c && s[i])
-				i++;
-			words++;
+			in_word = 1;
+			i++;
 		}
-		else
+		if (in_word)
+			words++;
+		in_word = 0;
+		if (str[i])
 			i++;
 	}
 	return (words);
 }
 
-static char				**copy_arr(char const *s, char **dst, char c)
+static int	count_simb(char **str, char c)
 {
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	k;
+	int		i;
+	int		spaces;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	while (s[i])
+	while (**str && **str == c)
 	{
-		if (s[i] != c)
-		{
-			while (s[i] != c && s[i])
-			{
-				dst[j][k] = (char)s[i];
-				i++;
-				k++;
-			}
-			dst[j++][k] = '\0';
-			k = 0;
-		}
-		else
-			i++;
+		i++;
+		(*str)++;
 	}
-	dst[j] = NULL;
-	return (dst);
-}
-
-static char				**check_and_malloc(char const *s, char c)
-{
-	char	**ret;
-
-	if (!s)
-		return (NULL);
-	ret = (char **)malloc(sizeof(ret) * (cnt_wrd(s, c) + 1));
-	if (!ret)
-		return (NULL);
-	return (ret);
-}
-
-static char				**my_free(char **s, int i)
-{
-	while (i >= 0)
-		free(s[i--]);
-	free(s);
-	return (NULL);
-}
-
-char					**ft_strsplit(char const *s, char c)
-{
-	int				i;
-	unsigned int	j;
-	unsigned int	words;
-	char			**ret;
-
-	i = -1;
-	j = 0;
-	words = 0;
-	ret = check_and_malloc(s, c);
-	if (!ret)
-		return (NULL);
-	while (s[++i])
+	spaces = i;
+	while (**str && **str != c)
 	{
-		if (s[i] != c)
-		{
-			while (s[i] != c && s[i++])
-				j++;
-			words++;
-			if (!(ret[words - 1] = (char *)malloc(j + 1)))
-				if (!my_free(ret, words - 1))
-					return (NULL);
-			j = 0;
-		}
+		i++;
+		(*str)++;
 	}
-	return (copy_arr(s, ret, c));
+	return (i - spaces);
+}
+
+static char	**copy_to_arr(const char *str, char **arr, char c)
+{
+	int		i;
+	int		wd;
+
+	wd = 0;
+	while (*str)
+	{
+		i = 0;
+		while (*str == c)
+			str++;
+		if (*str && *str != c)
+		{
+			while (*str && *str != c)
+				arr[wd][i++] = *str++;
+			arr[wd][i] = '\0';
+			wd++;
+		}
+		if (*str)
+			str++;
+	}
+	return (arr);
+}
+
+char		**ft_strsplit(const char *str, char c)
+{
+	int		i;
+	int		wd;
+	char	**res;
+	char	*copy;
+
+	if (!str || c == '\0')
+		return (NULL);
+	wd = count_words(str, c);
+	res = (char **)malloc(sizeof(char *) * wd + 1);
+	i = 0;
+	copy = (char *)str;
+	while (i < wd)
+		res[i++] = (char *)malloc(count_simb(&copy, c) + 1);
+	res[i] = NULL;
+	return (copy_to_arr(str, res, c));
 }

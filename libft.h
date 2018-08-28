@@ -88,6 +88,7 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstadd_end(t_list *alst, t_list *new);
 unsigned int		ft_lstlen(t_list *alst);
+int					get_next_line(int fd, char **line);
 int					ft_printf(const char *format, ...);
 
 #endif
