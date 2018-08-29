@@ -6,12 +6,11 @@
 /*   By: ahonchar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:10:09 by ahonchar          #+#    #+#             */
-/*   Updated: 2017/12/16 22:37:41 by ahonchar         ###   ########.fr       */
+/*   Updated: 2018/08/29 17:49:26 by ahonchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 
 static int	count_words(const char *str, char c)
 {
