@@ -63,7 +63,7 @@ static int		read_line(t_gnl *list, char **line)
 			else
 			{
 				free(*line);
-				return (0);
+				return ((int)(*line = NULL));
 			}
 		}
 		list->buff[ret] = '\0';
