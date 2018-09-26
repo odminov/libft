@@ -6,7 +6,7 @@
 #    By: ahonchar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 00:23:32 by ahonchar          #+#    #+#              #
-#    Updated: 2018/05/22 18:18:19 by ahonchar         ###   ########.fr        #
+#    Updated: 2018/09/26 12:59:05 by ahonchar         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -25,11 +25,13 @@ INC = libft.h
 
 all: $(NAME)
 
+printf_compile:
+	@make -C ./ft_printf
 
 $(D_OBJ)%.o:%.c libft.h
 	$(CC) $(FLAGS) -c $< -o $@
 
-$(NAME): $(D_OBJ) $(OBJ)
+$(NAME): $(D_OBJ) $(OBJ) printf_compile
 	ar rc $(NAME) $(OBJ)
 	@printf "\x1b[32m%s compiled\n\x1b[0m\n" $(NAME)
 	@make -C ./ft_printf
